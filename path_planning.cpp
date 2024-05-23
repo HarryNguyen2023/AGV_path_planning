@@ -115,6 +115,117 @@ pair<vector<int>, vector<int>> Graph::optimalPath(int src, vector<int> dests)
     return optimal_path;
 }
 
+// Function to handle intersection
+void Graph::intersectionExecution()
+{
+    // Case the robot is move upward
+    if(direct == 0 && (next_pos - cur_pos) == 1)
+}
+
+// Function for the navigation of the AGV
+void Graph::navigationAGV(vector<int> AGV_path)
+{
+    // Get the next position
+    auto cur_it = find(AGV_path.begin(), AGV_path.end(), cur_pos);
+    // Case reach the last position
+    if(cur_it == AGV_path.end())
+    {
+        cout<<"Reach the last destination"<<endl;
+        done = 1;
+        return;
+    }
+    else
+    {
+        // Get the next position
+        next_pos = *(cur_it + 1);
+    }   
+    // Case get to the intersection
+    int dist = next_pos - cur_pos;
+    // Case going upward and continue upward
+    if((direct == 0 && (cur_pos == 0 || cur_pos == 4 || cur_pos == 18 || cur_pos == 32)) && dist == 1)
+    {
+        intersect = 1;
+        direct = 0;
+        move = 0;
+    }
+    else if(direct == 0 && (dist == 3 || dist == 6 || dist == 9))
+    {
+        direct = 3;
+        move = 3;
+        intersect = 1;
+    }
+    // Case going upward and move left
+    else if(direct == 0 && (dist == -5 || dist == -8))
+    {
+        direct = 2;
+        move = 2;
+        intersect = 1;
+    }
+    // Case going downward and continue downward
+    else if((direct == 1 && (cur_pos == 1 || cur_pos == 5 || cur_pos == 19 || cur_pos == 33)) && dist == -1)
+    {
+        direct = 1;
+        move = 0;
+        intersect = 1;
+    }
+    // Case going downward and move left
+    else if(direct == 1 && (dist == -5 || dist == -8))
+    {
+        direct = 3;
+        move = 2;
+        intersect = 1;
+    }
+    // Going downward and move right
+    else if(direct == 1 && (dist == -3 || dist == -6))
+    {
+        direct = 2;
+        move = 3;
+        intersect = 1;
+    }
+    // Case going left and continue to move left
+    else if(direct == 2 && dist == -11)
+    {
+        direct = 2;
+        move = 0;
+        intersect = 1;
+    }
+    // Case going left and move to upward
+    else if(direct == 2 && (dist == -5 || dist == -8)) 
+    {
+        direct = 0;
+        move = 3;
+        intersect = 1;     
+    }
+    // Case going left and move to downward
+    else if(direct == 2 && (dist == -3 || dist == -6 || dist == -9))
+    {
+        direct = 1;
+        move = 2;
+        intersect = 1;
+    }
+    // Going right and continue to move right
+    else if(direct == 3 && dist == 11)
+    {
+        direct = 3;
+        move = 0;
+        intersect = 1;
+    }
+    // Case going right and move to downward
+    else if(direct == 2 && (dist == 5 || dist == 8)) 
+    {
+        direct = 1;
+        move = 3;
+        intersect = 1;     
+    }
+    // Case going right and move to upward
+    else if(direct == 2 && (dist == 3 || dist == 6 || dist == 9))
+    {
+        direct = 0;
+        move = 2;
+        intersect = 1;
+    }
+}
+
 // Driver's code
 int main()
 {
@@ -171,7 +282,7 @@ int main()
     // cout<<"Dest: "<<s_path.first<<"\n";
     // for (auto i = s_path.second.cbegin(); i != s_path.second.cend(); ++i) 
     //     cout << *i << " ";
-    vector<int> destinations{8, 4, 1};
+    vector<int> destinations{8, 4, 7};
     pair<vector<int>, vector<int>> opt_path = g.optimalPath(0 , destinations);
     for (auto i = opt_path.first.cbegin(); i != opt_path.first.cend(); ++i) 
         cout << *i << " ";
