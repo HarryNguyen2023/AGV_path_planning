@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <queue>
+
 #include "path_planning.h"
 
 // Allocates memory for adjacency list
@@ -120,6 +123,9 @@ void Graph::intersectionExecution()
 {
     // Case the robot is move upward
     if(direct == 0 && (next_pos - cur_pos) == 1)
+    {
+
+    }
 }
 
 // Function for the navigation of the AGV
@@ -276,12 +282,6 @@ int main()
     g.addEdge(7, 8, 7);
     g.addEdge(8, 7, 7);
 
-
-    // Function call
-    // pair<int, vector<int>> s_path = g.Dijkstra(0, 8);
-    // cout<<"Dest: "<<s_path.first<<"\n";
-    // for (auto i = s_path.second.cbegin(); i != s_path.second.cend(); ++i) 
-    //     cout << *i << " ";
     vector<int> destinations{8, 4, 7};
     pair<vector<int>, vector<int>> opt_path = g.optimalPath(0 , destinations);
     for (auto i = opt_path.first.cbegin(); i != opt_path.first.cend(); ++i) 

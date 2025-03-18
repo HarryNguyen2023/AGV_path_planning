@@ -2,7 +2,6 @@
 // priority_queue in STL
 #include <iostream>
 #include <vector>
-#include <bits/stdc++.h>
 using namespace std;
 
 // iPair ==> Integer Pair
@@ -34,6 +33,6 @@ public:
     // Function to get the optimal shortest path between many destinations
     pair<vector<int>, vector<int>> optimalPath(int src, vector<int> dests);
     // Function for the navigation of the AGV
-    void navigationAGV(void);
+    void navigationAGV(vector<int> AGV_path);
     void intersectionExecution(void);
 };
